@@ -1,0 +1,19 @@
+version: '2.2'
+services:
+  mr-img:
+    build: .
+    container_name: mr-img-service
+    image: mr-img:latest
+    cpus: 1.5
+    mem_limit: 2048m
+    ports:
+      - "8080:80"
+    volumes:
+      - type: volume
+        source: mr-img
+        target: /tmp
+        volume:
+          nocopy: false
+
+volumes:
+  mr-img:
