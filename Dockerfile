@@ -2,16 +2,16 @@ FROM node:16 AS builder
 VOLUME mr-img
 LABEL maintainer="kyle@apollographql.com"
 ENV NODE_ENV=production
-WORKDIR /mr-img
+WORKDIR /server
 
 
-COPY package*.json .
+COPY *.* .
 RUN npm install
 
-COPY tmp /tmp
-COPY tmp mr-img/tmp
+CMD [ "node", "index.js" ]
 
-RUN npm run start
+COPY /server/tmp/*.* /tmp
+
 
 ###########
 ## NGINX ##

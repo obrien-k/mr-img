@@ -1,7 +1,9 @@
 version: '2.2'
 services:
   mr-img:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: mr-img-service
     image: mr-img:latest
     cpus: 1.5
@@ -11,7 +13,7 @@ services:
     volumes:
       - type: volume
         source: mr-img
-        target: /tmp
+        target: /server
         volume:
           nocopy: false
 
