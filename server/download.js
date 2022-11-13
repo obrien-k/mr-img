@@ -11,7 +11,7 @@ const TIMEOUT = 10000
 function download (url, dest) {
   const uri = new URL(url)
   if (!dest) {
-    dest = './tmp/' + basename(uri.pathname)
+    dest = __dirname + '/tmp/' + basename(uri.pathname)
   }
   const pkg = url.toLowerCase().startsWith('https:') ? https : http
 
@@ -21,11 +21,10 @@ function download (url, dest) {
         const file = fs.createWriteStream(dest, { flags: 'wx' })
         res
           .on('end', () => {
-            
             file.end()
             imageMetadata(dest).then(() => {
-              file.destroy()
-              fs.unlink(dest, () => reject())
+              console.log(dest + 'file created');
+              resolve()
             })
             
             //console.log(`${uri.pathname} downloaded to: ${path}`)
