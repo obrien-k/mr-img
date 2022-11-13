@@ -4,6 +4,10 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "mongodb": "^4.11.0",
     "sharp": "^0.31.2"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^4.0.7"
   }
 }
