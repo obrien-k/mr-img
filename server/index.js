@@ -1,9 +1,21 @@
+const express = require('express');
+const cors = require('cors')
+const app = express();
+app.use(cors())
+app.options('*', cors())
+app.use(express.json({ extended: false }));
 const download = require('./download.js')
-const url = 'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/streams/2013/March/130326/1C6639340-google-logo.jpg'
+const url = 'https://i.stack.imgur.com/aA5kp.jpg'
 console.log('Downloading ' + url)
 
+app.get('/', (req, res) => res.send('API Running'));
+
+// Define Routes
+app.post('/post', cors(), (req, res) => {
+  res.send('Got a POST request')
+  
+})
 async function run() {
-  console.log('Downloading file')
   try {
     await download(url)
     console.log('Download done')
@@ -12,5 +24,7 @@ async function run() {
     console.log(e.message)
   }
 }
+run();
+const PORT = process.env.PORT || 5000;
 
-run()
+app.listen(PORT, () => console.log(`Server started on ${PORT}`));

@@ -10,3 +10,13 @@ async function imageMetadata(dest) {
 }
 
 module.exports = imageMetadata;
+
+// fetch all images
+
+
+
+// compare img res to find largest image
+
+// return largest image
+
+// resize largest image
