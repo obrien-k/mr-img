@@ -11,9 +11,8 @@ const TIMEOUT = 10000
 function download (url, dest) {
   const uri = new URL(url);
 
-
   if (!dest) {
-    dest = __dirname + '/tmp/' + basename(uri.pathname)
+    dest = './tmp/' + basename(uri.pathname)
   }
 
   const dirname = dest.substring(0, dest.lastIndexOf('/'));
@@ -36,7 +35,6 @@ function download (url, dest) {
         let downloaded = 0;
         let percent = 0;
         res
-<<<<<<< HEAD
           .on('data', function(chunk) {
             try {
               file.write(chunk);
@@ -53,17 +51,6 @@ function download (url, dest) {
           .on('end', function() {
             file.end();
             resolve();
-=======
-          .on('end', () => {
-            file.end()
-            imageMetadata(dest).then(() => {
-              console.log(dest + 'file created');
-              resolve()
-            })
-            
-            //console.log(`${uri.pathname} downloaded to: ${path}`)
-            resolve()
->>>>>>> 05771246b81cf2cdc2c16448d872a46423776b46
           })
           .on('error', (err) => {
             file.destroy();
