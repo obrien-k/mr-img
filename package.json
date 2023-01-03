@@ -1,5 +1,6 @@
 {
   "scripts": {
+<<<<<<< HEAD
     "start": "node server/index.js"
   },
   "dependencies": {
@@ -7,6 +8,16 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "openai": "^3.1.0",
+=======
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^4.11.0",
+>>>>>>> 05771246b81cf2cdc2c16448d872a46423776b46
     "sharp": "^0.31.2"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^4.0.7"
   }
 }
