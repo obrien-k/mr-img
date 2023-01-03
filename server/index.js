@@ -5,15 +5,8 @@ app.use(cors())
 app.options('*', cors())
 app.use(express.json({ extended: false }));
 const download = require('./download.js')
-<<<<<<< HEAD
-const url = 'https://i.stack.imgur.com/aA5kp.jpg'
-=======
-const url = 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01615/opgs/edr/fcam/FLB_540868499EDR_F0610924FHAZ00206M_.JPG'
->>>>>>> 05771246b81cf2cdc2c16448d872a46423776b46
-console.log('Downloading ' + url)
-'use strict';
 
-<<<<<<< HEAD
+const url = 'https://i.stack.imgur.com/aA5kp.jpg'
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
@@ -21,8 +14,6 @@ app.post('/post', cors(), (req, res) => {
   res.send('Got a POST request')
   
 })
-=======
-const express = require('express');
 
 // Constants
 const PORT = 8080;
@@ -37,7 +28,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, HOST, () => {
   console.log(`Running on http://${HOST}:${PORT}`);
 });
->>>>>>> 05771246b81cf2cdc2c16448d872a46423776b46
 async function run() {
   try {
     await download(url)
