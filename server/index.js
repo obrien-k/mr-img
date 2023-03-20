@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors')
 const app = express();
+require('dotenv').config()
+
 app.use(cors())
 app.options('*', cors())
 app.use(express.json({ extended: false }));
 const download = require('./download.js')
 
-const url = 'https://i.stack.imgur.com/aA5kp.jpg'
+const url = 'https://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01792/opgs/edr/fcam/FLB_556577420EDR_F0651174FHAZ00302M_.jpg'
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
@@ -16,14 +18,8 @@ app.post('/post', cors(), (req, res) => {
 })
 
 // Constants
-const PORT = 8080;
 const HOST = '0.0.0.0';
-
-// App
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, HOST, () => {
   console.log(`Running on http://${HOST}:${PORT}`);
@@ -38,6 +34,3 @@ async function run() {
   }
 }
 run();
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server started on ${PORT}`));

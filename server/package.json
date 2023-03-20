@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start":"node index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "sharp": "^0.31.2"

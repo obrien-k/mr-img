@@ -6,12 +6,16 @@ async function imageMetadata(dest) {
     console.log(metadata.height);
     imgRes = (metadata.height * metadata.width);
     console.log(imgRes);
+    console.log('**********');
+    console.log(metadata)
+
   });
+
 }
 
 module.exports = imageMetadata;
 
-// fetch all images
+// fetch all images per sol
 
 
 

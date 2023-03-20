@@ -6,7 +6,7 @@ const { basename } = require('path');
 const { URL } = require('url');
 const imageMetadata = require('./metadata.js')
 
-const TIMEOUT = 10000
+const TIMEOUT = 30000
 
 function download (url, dest) {
   const uri = new URL(url)
@@ -42,7 +42,7 @@ function download (url, dest) {
               imageMetadata(dest)
                 .then(() => {
                   console.log(dest + ' file created');
-                  resolve()
+                  resolve(dest)
                 })
                 .catch((err) => {
                   console.error(`Error extracting metadata for ${dest}: ${err.message}`)
@@ -61,9 +61,13 @@ function download (url, dest) {
         }
       })
       request.setTimeout(TIMEOUT, function () {
-        request.abort()
+        request.destroy()
         reject(new Error(`Request timeout after ${TIMEOUT / 1000.0}s`))
       })
+      // Handle network errors
+      request.on('error', (err) => {
+      reject(new Error(`Error downloading image: ${err.message}`));
+    });
     }
   })
 }
