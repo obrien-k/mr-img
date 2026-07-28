@@ -1,6 +1,6 @@
 const { connectToDatabase } = require("./_connector");
 
-export default async (req, res) => {
+module.exports = async (req, res) => {
   const db = await connectToDatabase();
 
   if (req.body !== '' && req.body.img_src !== undefined && req.body.img_src !== '') {

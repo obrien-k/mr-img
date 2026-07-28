@@ -1,6 +1,6 @@
 // download.js
-const http = require('http'); 
-const https = require('https'); 
+const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const { basename } = require('path');
 const { URL } = require('url');
@@ -16,21 +16,28 @@ function download (url, dest) {
   const pkg = url.toLowerCase().startsWith('https:') ? https : http
 
   return new Promise((resolve, reject) => {
-    fs.access(dest, fs.constants.F_OK, (err) => {
-      if (!err) {
-        // File already exists, overwrite it
-        fs.unlink(dest, (err) => {
-          if (err) {
-            reject(err)
-          } else {
-            downloadFile()
-          }
-        })
-      } else {
-        // File does not exist, download it
-        downloadFile()
-      }
+    fs.mkdir(__dirname + '/tmp', { recursive: true }, (err) => {
+      if (err) return reject(err)
+      checkExisting()
     })
+
+    function checkExisting() {
+      fs.access(dest, fs.constants.F_OK, (err) => {
+        if (!err) {
+          // File already exists, overwrite it
+          fs.unlink(dest, (err) => {
+            if (err) {
+              reject(err)
+            } else {
+              downloadFile()
+            }
+          })
+        } else {
+          // File does not exist, download it
+          downloadFile()
+        }
+      })
+    }
 
     function downloadFile() {
       const request = pkg.get(uri.href).on('response', (res) => {
