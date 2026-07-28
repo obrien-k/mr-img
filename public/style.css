@@ -1,0 +1,82 @@
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100dvh; /* 100vh doesn't discount mobile browser chrome; dvh does */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Blurred, scaled-up copy of the same image fills the frame behind it, so a
+   portrait rover photo on a landscape screen (or vice versa) never shows bare
+   letterbox bars — the fit is always "cover", the content is never lost. */
+#backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px) brightness(0.45) saturate(1.2);
+  transform: scale(1.15); /* hides the blur's soft edge */
+}
+
+/* object-fit: contain means the source image's own aspect ratio is never
+   cropped, regardless of the viewport's ratio (ultrawide desktop, mobile
+   portrait, tablet) — the backdrop above handles what "cover" would otherwise
+   have to sacrifice. */
+#feature-image {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+}
+
+#caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+  color: #eee;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+#stage.loading #backdrop,
+#stage.loading #feature-image {
+  visibility: hidden;
+}
+
+#stage.error #backdrop,
+#stage.error #feature-image {
+  display: none;
+}
+
+#stage.error {
+  background: #111;
+}
+
+@media (max-width: 480px) {
+  #caption {
+    font-size: 0.75rem;
+  }
+}

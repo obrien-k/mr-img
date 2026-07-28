@@ -1,22 +1,8 @@
-const sharp = require('sharp');
+const sizeOf = require('image-size');
 
 async function imageMetadata(dest) {
-  const metadata = await sharp(dest).metadata().then(function(metadata){
-    console.log(metadata.width);
-    console.log(metadata.height);
-    imgRes = (metadata.height * metadata.width);
-    console.log(imgRes);
-  });
+  const { width, height } = sizeOf(dest);
+  return { width, height };
 }
 
 module.exports = imageMetadata;
-
-// fetch all images
-
-
-
-// compare img res to find largest image
-
-// return largest image
-
-// resize largest image
