@@ -1,0 +1,21 @@
+[22:59:19] scan: DVD has 26 title(s)
+[22:59:19] scan: scanning title 1
+[22:59:19] scan: duration is 01:53:08 (6788600 ms)
+[22:59:19] pgc_id: 1, pgn: 1: pgc: 0x7f9437805560
+[22:59:19] scan: checking audio 1
+[22:59:19] scan: id=0x80bd, lang=English (AC3), 3cc=eng ext=1
+[22:59:19] scan: title 1 has 13 chapters
+[22:59:19] scan: chap 1, 504533 ms
+[22:59:19] scan: chap 2, 415834 ms
+[22:59:19] scan: chap 3, 514467 ms
+[22:59:19] scan: chap 4, 617300 ms
+[22:59:19] scan: chap 5, 639233 ms
+[22:59:19] scan: chap 6, 704767 ms
+[22:59:19] scan: chap 7, 572200 ms
+[22:59:19] scan: chap 8, 534066 ms
+[22:59:19] scan: chap 9, 642433 ms
+[22:59:19] scan: chap 10, 365333 ms
+[22:59:19] scan: chap 11, 643867 ms
+[22:59:19] scan: chap 12, 633967 ms
+[22:59:19] scan: chap 13, 600 ms
+[22:59:19] scan: aspect = 16:9

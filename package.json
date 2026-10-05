@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node server/index.js",
-    "test": "node --test server/*.test.js"
+    "test": "node --test server/*.test.js dvd/*.test.js",
+    "dvd": "node bin/dvd.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

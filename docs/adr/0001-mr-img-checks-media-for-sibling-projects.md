@@ -12,35 +12,43 @@ Several of my projects handle media files, and each one handles them its own way
 
 None of them shares a way to answer the basic questions about a file: what is it, what shape is it, and did a conversion keep what it was supposed to keep.
 
-mr-img already answers some of these questions for images. `server/metadata.js` measures dimensions. `server/aspect_ratio.js` decides whether an image is cropped or padded to fit a target ratio.
+Today mr-img is a **Mars rover photo demo**:
 
-A recent manual job showed the same pattern at a larger scale: backing up a dual-layer DVD as two single-layer DVD-Video discs. Each step followed one loop:
+- `/api/rover-photo` downloads a day's NASA photos, measures each one (`image-size`, width and height only) and serves the largest.
+- `planAspectFit` (`server/aspect_ratio.js`) decides whether an image is cropped or padded to fit a target ratio. It is tested, but nothing calls it. Since `sharp` was dropped, nothing in the repo transforms an image.
+- `janitor.js` and `_connector.js` (a Mongo-backed redirect) aren't wired to any route. The `mongodb` and `openai` dependencies are unused.
+- The Dockerfile's final stage is nginx serving static files. The Node server never runs in it.
+
+A manual job then showed the pattern this repo should own: backing up a dual-layer DVD as two single-layer discs (`docs/runbooks/dvd9-to-two-dvd5.md`). Every step followed one loop:
 
 1. **Probe:** measure what is actually there (streams, frame rate, aspect, duration, size).
 2. **Plan:** decide the transform from those measurements (bitrate budget, pulldown, which titles go on which disc).
 3. **Transform:** run the tool (ffmpeg, dvdauthor).
-4. **Verify:** measure the output again and compare it with the plan (frame count, duration, chapter points, final size against the disc capacity).
+4. **Verify:** measure the output again and compare it with the plan.
 
-Most of the mistakes in that job came from skipping step 1 or step 4: a guessed frame rate, a guessed title layout, a step that was never run.
+Most mistakes in that job came from skipping step 1 or step 4: a guessed frame rate, a guessed title layout, a step that never ran.
 
 ## Decision
 
-mr-img becomes the one place where sibling projects get media measured, planned and checked. They stop doing that work themselves.
+mr-img becomes the one place sibling projects get media measured, planned and checked. The rover demo stays as the first example client.
 
-1. **Probe returns a manifest.** mr-img inspects a file and returns a JSON manifest of measured facts only: type, dimensions or resolution, aspect ratio, duration, streams, byte size and a content hash. Nothing in the manifest is guessed.
-2. **Plans are pure functions over manifests.** A plan takes a manifest and a target (for example "16:9 at 1600px wide" or "fit a 4.7 GB DVD-5") and returns the steps to get there. `planAspectFit` is the first plan of this kind. Plans don't touch files, so they are easy to test.
-3. **Every transform ends with a verify.** After a transform, mr-img probes the output and compares it with the plan. If they don't match, the job fails loudly instead of producing a file that looks plausible but is wrong.
-4. **Callers use the existing HTTP server or a CLI.** No shared library has to be imported into the Node, Python and static-site projects. Callers keep the manifest next to the file they store.
+1. **Probe produces measured facts only.** Nothing in a probe result is guessed.
+2. **Plans are data plus pure functions.** A plan (a *recipe*) is a document: the probe facts it was built from, the target, and the steps. Code that turns a recipe into commands has no side effects, so it is tested by comparing its output with known-good runs. `dvd/` is the first module built this way: `dvd/recipes/donnie-darko.json` regenerates the exact commands and dvdauthor XML that made the burned discs, and the tests assert they match.
+3. **Every transform ends with a verify.** Durations, field order, structure and size are re-measured. On a mismatch the job stops instead of producing something that looks plausible but is wrong. For example, the field-order check caught ffmpeg 6.1 writing bottom-field-first video where ffmpeg 9 writes top-first.
+4. **Recipes and probe results are stored as documents** (NoSQL; this gives the unused `mongodb` dependency a job) and are **read through a GraphQL model**. korin-pink/stellar-api connects to ATProto through that model. A later ADR will cover it.
+5. **Tools run where the hardware is.** Burning, and anything else that needs a physical drive, stays a manual step printed by the generated script. mr-img never burns on its own.
 
 ## Consequences
 
-- Sibling projects lose their own media heuristics and depend on mr-img being reachable, or at least on its CLI being installed.
-- Manifests become a contract. Adding a field is safe; renaming or removing one is a breaking change and needs a version field.
-- Video and disc work needs ffprobe and ffmpeg in mr-img's runtime (Dockerfile). Today it only handles images.
-- DeadHonestCitation's "never silently dropped" rule and mr-img's verify step reinforce each other: a capture can carry its manifest as evidence of what was saved.
+- The repo stops being a single-purpose demo, so the README, Dockerfile and runtime have to change. Video work needs ffprobe, ffmpeg (≥ 9), dvdauthor and dvdbackup in the runtime image.
+- The Docker setup has to be fixed before any of this can run as a service.
+- A recipe's shape becomes a contract once it is stored. Adding a field is safe; renaming or removing one needs a version field.
+- Sibling projects drop their own media heuristics and depend on mr-img.
+- DeadHonestCitation's "never silently dropped" rule and the verify step reinforce each other: a capture can carry its probe result as evidence of what was saved.
 
 ## Open questions
 
-- How DeadSimpleCMS and korin-pink store assets today, and where a manifest would live for each.
-- Whether the DVD backup pipeline (probe → 2-pass MPEG-2 → dvdauthor → ISO) belongs in mr-img itself or stays a script that only uses mr-img's probe and verify.
-- Hash choice (SHA-256 is the default assumption).
+- The GraphQL schema, and how stellar-api maps recipes and probe results to ATProto records.
+- How DeadSimpleCMS and korin-pink store assets today, and where probe results attach.
+- Whether `janitor.js` and `_connector.js` become the start of the document store or get deleted.
+- Hash choice for content identity (SHA-256 assumed).

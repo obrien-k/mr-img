@@ -1,0 +1,22 @@
+libdvdread: Found 4 VTS's
+[02:39:20] scan: chap 1, 20833 ms
+[02:39:20] scan: chap 2, 35567 ms
+[02:39:20] scan: chap 3, 149667 ms
+[02:39:20] scan: chap 4, 214600 ms
+[02:39:20] scan: chap 5, 77233 ms
+[02:39:20] scan: chap 6, 30666 ms
+[02:39:20] scan: chap 7, 67899 ms
+[02:39:20] scan: chap 8, 54567 ms
+[02:39:20] scan: chap 9, 58000 ms
+[02:39:20] scan: chap 10, 105400 ms
+[02:39:20] scan: chap 11, 61033 ms
+[02:39:20] scan: chap 12, 135667 ms
+[02:39:20] scan: chap 13, 185767 ms
+[02:39:20] scan: chap 14, 29834 ms
+[02:39:20] scan: chap 15, 126500 ms
+[02:39:20] scan: chap 16, 225767 ms
+[02:39:20] scan: chap 17, 67233 ms
+[02:39:20] scan: chap 18, 163567 ms
+[02:39:20] scan: chap 19, 75234 ms
+[02:39:20] scan: chap 20, 27166 ms
+[02:39:20] scan: chap 21, 600 ms

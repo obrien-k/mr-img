@@ -1,0 +1,11 @@
+[02:02:27] scan: scanning title 1
+[02:02:27] scan: duration is 01:53:08 (6788600 ms)
+[02:02:27] scan: checking subtitle 1
+[02:02:27] scan: scanning title 2
+[02:02:27] scan: duration is 01:25:19 (5119166 ms)
+[02:02:27] scan: scanning title 3
+[02:02:27] scan: duration is 00:02:28 (148600 ms)
+[02:02:27] scan: scanning title 4
+[02:02:27] scan: duration is 00:31:52 (1912800 ms)
+[02:02:27] scan: scanning title 26
+[02:02:27] scan: duration is 00:08:43 (523367 ms)

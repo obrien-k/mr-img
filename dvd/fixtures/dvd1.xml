@@ -1,0 +1,18 @@
+<dvdauthor dest="dvd1">
+  <vmgm>
+    <fpc>jump title 1;</fpc>
+  </vmgm>
+  <titleset>
+    <titles>
+      <video format="ntsc" aspect="16:9" widescreen="nopanscan"/>
+      <audio lang="en"/>
+      <audio lang="en" content="comments1"/>
+      <audio lang="en" content="comments2"/>
+      <subpicture lang="en"/>
+      <pgc>
+        <vob file="main.mpg" chapters="0,8:24.533,15:20.367,23:54.834,34:12.134,44:51.367,56:36.134,1:06:08.334,1:15:02.400,1:25:44.833,1:31:50.166,1:42:34.033"/>
+        <post>call vmgm menu;</post>
+      </pgc>
+    </titles>
+  </titleset>
+</dvdauthor>

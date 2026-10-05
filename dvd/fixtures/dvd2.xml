@@ -1,0 +1,15 @@
+<dvdauthor dest="dvd2">
+  <vmgm>
+    <fpc>jump title 1;</fpc>
+  </vmgm>
+  <titleset>
+    <titles>
+      <video format="ntsc" aspect="16:9" widescreen="nopanscan"/>
+      <audio lang="en"/>
+      <pgc>
+        <vob file="t2.mpg" chapters="0,7:25.567,18:10.967,31:17.200,58:22.400,1:11:48.967,1:18:30.667"/>
+        <vob file="t3.mpg" chapters="0"/>
+      </pgc>
+    </titles>
+  </titleset>
+</dvdauthor>

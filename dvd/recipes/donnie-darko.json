@@ -1,0 +1,79 @@
+{
+  "id": "donnie-darko-theatrical-us",
+  "summary": "Dual-layer DVD-9 split into two single-layer DVD-5 discs: A = movie (re-encoded) + both commentaries + subs; D2 = the 85-minute feature (title 2) + title 3, stream-copied.",
+  "source": "/Volumes/DONNIE DARKO THEATRICAL US",
+  "workdir": "~/dd",
+  "durationToleranceMs": 10000,
+  "probe": {
+    "note": "Measured facts the plan below was built from (HandBrakeCLI --scan, dvdbackup -I, ffprobe).",
+    "titlesets": [
+      { "titleset": 1, "aspect": "16:9", "titles": [1], "audio": ["0x80 ac3 5.1 448k", "0x81 ac3 2.0 192k commentary 1", "0x82 ac3 2.0 192k commentary 2"], "subpicture": ["0x20 en"] },
+      { "titleset": 2, "aspect": "16:9", "titles": [2, 3], "audio": ["0x80 ac3 2.0 192k"] },
+      { "titleset": 3, "aspect": "16:9", "titles": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25], "audio": ["0x80 ac3 2.0 192k", "0x81 ac3 2.0 192k commentary"], "note": "title 4 = deleted scenes play-all; 5-25 = the same scenes one title each" },
+      { "titleset": 4, "aspect": "4:3", "titles": [26], "audio": ["0x80 ac3 1.0 192k"] }
+    ],
+    "video": "720x480 MPEG-2, soft-telecined 23.976 film (ffprobe: 29.8x fps, 59.94 tbr)"
+  },
+  "discs": [
+    {
+      "id": "A",
+      "xml": "dvd1.xml",
+      "dir": "dvd1",
+      "iso": "dd1-movieonly.iso",
+      "volume": "DONNIE_DARKO_A",
+      "fpc": "jump title 1;",
+      "titlesets": [
+        {
+          "video": { "format": "ntsc", "aspect": "16:9", "widescreen": "nopanscan" },
+          "audio": [{ "lang": "en" }, { "lang": "en", "content": "comments1" }, { "lang": "en", "content": "comments2" }],
+          "subpicture": [{ "lang": "en" }],
+          "pgcs": [
+            {
+              "vobs": [
+                { "file": "main.mpg", "chapterDurationsMs": [504533, 415834, 514467, 617300, 639233, 704767, 572200, 534066, 642433, 365333, 643867, 633967, 600] }
+              ],
+              "post": "call vmgm menu;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "xml": "dvd2.xml",
+      "dir": "dvd2",
+      "iso": "dd2.iso",
+      "volume": "DONNIE_DARKO_D2",
+      "fpc": "jump title 1;",
+      "titlesets": [
+        {
+          "video": { "format": "ntsc", "aspect": "16:9", "widescreen": "nopanscan" },
+          "audio": [{ "lang": "en" }],
+          "pgcs": [
+            {
+              "vobs": [
+                { "file": "t2.mpg", "chapterDurationsMs": [445567, 645400, 786233, 1625200, 806567, 401700, 407900, 600] },
+                { "file": "t3.mpg", "chapterDurationsMs": [148000, 600] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "steps": [
+    { "run": "copy-vobs", "note": "main feature VOBs to local disk (two passes read it)", "to": "src",
+      "files": ["VTS_01_1.VOB", "VTS_01_2.VOB", "VTS_01_3.VOB", "VTS_01_4.VOB", "VTS_01_5.VOB", "VTS_01_6.VOB"] },
+    { "run": "encode-2pass", "note": "movie: 5.1 + both commentaries + subs", "out": "main.mpg", "bitrate": "4600k", "aspect": "16:9",
+      "inputs": ["src/VTS_01_1.VOB", "src/VTS_01_2.VOB", "src/VTS_01_3.VOB", "src/VTS_01_4.VOB", "src/VTS_01_5.VOB", "src/VTS_01_6.VOB"],
+      "maps": ["0:i:0x80", "0:i:0x81", "0:i:0x82", "0:i:0x20?"], "expectedMs": 6788600 },
+    { "run": "author", "disc": "A" },
+    { "run": "iso", "disc": "A" },
+    { "run": "extract-title", "note": "only title 2's cells, in play order", "title": 2 },
+    { "run": "extract-title", "title": 3 },
+    { "run": "remux", "out": "t2.mpg", "inputs": ["t/T2/VIDEO_TS/VTS_02_1.VOB", "t/T2/VIDEO_TS/VTS_02_2.VOB"], "expectedMs": 5119166 },
+    { "run": "remux", "out": "t3.mpg", "inputs": ["t/T3/VIDEO_TS/VTS_02_1.VOB"], "expectedMs": 148600 },
+    { "run": "author", "disc": "D2" },
+    { "run": "iso", "disc": "D2" }
+  ]
+}
