@@ -1,0 +1,52 @@
+Cannot read title from DVD device /Volumes/DONNIE DARKO THEATRICAL US
+DVD-Video information of the DVD with title ""
+
+Main feature:
+	Title set containing the main feature is 1
+	The aspect ratio of the main feature is 16:9
+	The main feature has 1 angle
+	The main feature has 3 audio tracks
+	The main feature has 1 subpicture channel
+	The main feature has a maximum of 21 chapters in one of its titles
+	The main feature has a maximum of 6 audio channels in one of its titles
+
+
+Title Sets:
+
+	Title set 1
+		The aspect ratio of title set 1 is 16:9
+		Title set 1 has 1 angle
+		Title set 1 has 3 audio tracks
+		Title set 1 has 1 subpicture channel
+
+		Title included in title set 1 is
+			Title 1:
+				Title 1 has 13 chapters
+				Title 1 has 6 audio channels
+
+
+	Title set 2
+		The aspect ratio of title set 2 is 16:9
+		Title set 2 has 1 angle
+		Title set 2 has 1 audio track
+		Title set 2 has 0 subpicture channels
+
+		Titles included in title set 2 are
+			Title 2:
+				Title 2 has 8 chapters
+				Title 2 has 2 audio channels
+			Title 3:
+				Title 3 has 2 chapters
+				Title 3 has 2 audio channels
+
+
+	Title set 4
+		The aspect ratio of title set 4 is 4:3
+		Title set 4 has 1 angle
+		Title set 4 has 1 audio track
+		Title set 4 has 0 subpicture channels
+
+		Title included in title set 4 is
+			Title 26:
+				Title 26 has 2 chapters
+				Title 26 has 1 audio channel

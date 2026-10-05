@@ -1,7 +1,19 @@
 {
+  "name": "mr-img",
+  "private": true,
+  "bin": {
+    "audio-cd": "bin/audio-cd.js",
+    "dvd": "bin/dvd.js",
+    "rip-verify": "bin/rip-verify.js"
+  },
+  "engines": {
+    "node": ">=18.3"
+  },
   "scripts": {
     "start": "node server/index.js",
-    "test": "node --test server/*.test.js"
+    "test": "node --test server/*.test.js dvd/*.test.js audio-cd/test/*.test.js rip/test/*.test.js",
+    "dvd": "node bin/dvd.js",
+    "audio-cd": "node bin/audio-cd.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
